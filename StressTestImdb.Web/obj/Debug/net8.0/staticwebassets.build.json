@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "wN8agmBAtqYHblWs029+NZuL1qFUJIaZ3bAm+3BBz+g=",
+  "Source": "StressTestImdb.Web",
+  "BasePath": "_content/StressTestImdb.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
