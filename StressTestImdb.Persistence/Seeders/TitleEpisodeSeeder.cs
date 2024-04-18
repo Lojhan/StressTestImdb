@@ -8,24 +8,10 @@ public class TitleEpisodeSeeder
     {
         if (context.TitleEpisode.Any()) return;
         var titleEpisodes = File.ReadAllLines("title.episode.tsv");
-        var titleEpisodesList = new List<TitleEpisode>();
+        
+        foreach (var titleEpisode in titleEpisodes.Skip(1))
+            context.TitleEpisode.Add(TitleEpisode.FromCsv(titleEpisode));
 
-        foreach (var titleEp in titleEpisodes.Skip(1))
-        {
-            var titleEpData = titleEp.Split('\t');
-
-            var titleEpObj = new TitleEpisode
-            {
-                tconst = titleEpData[0],
-                parentTconst = titleEpData[1],
-                seasonNumber = int.Parse(titleEpData[2]),
-                episodeNumber = int.Parse(titleEpData[3])
-            };
-
-            titleEpisodesList.Add(titleEpObj);
-        }
-
-        context.TitleEpisode.AddRange(titleEpisodesList);
         context.SaveChanges();
     }
 }

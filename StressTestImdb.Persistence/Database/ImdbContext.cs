@@ -12,7 +12,7 @@ public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(opti
     public DbSet<TitleCrew> TitleCrew { get; set; }
     public DbSet<TitleEpisode> TitleEpisode { get; set; }
     public DbSet<TitlePrincipals> TitlePrincipals { get; set; }
-    public DbSet<TitleRatings> TitleRatings { get; set; }
+    public DbSet<TitleRating> TitleRatings { get; set; }
     public DbSet<NameBasics> NameBasics { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

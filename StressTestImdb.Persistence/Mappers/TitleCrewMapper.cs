@@ -8,11 +8,11 @@ class TitleCrewMapper : IEntityTypeConfiguration<TitleCrew>
 {
     public void Configure(EntityTypeBuilder<TitleCrew> builder)
     {
-        builder.ToTable("title.crew");
-        builder.HasKey(x => x.tconst);
-        builder.Property(x => x.tconst).HasColumnName("tconst");
-        builder.Property(x => x.directors).HasColumnName("directors");
-        builder.Property(x => x.writers).HasColumnName("writers");
+        builder.ToTable("title_crew");
+        builder.HasKey(x => x.Tconst);
+        builder.Property(x => x.Tconst).HasColumnName("tconst");
+        builder.Property(x => x.Directors).HasColumnName("directors");
+        builder.Property(x => x.Writers).HasColumnName("writers");
     }
 }
 

@@ -8,26 +8,10 @@ public class TitlePrincipalsSeeder
     {
         if (context.TitlePrincipals.Any()) return;
         var titlePrincipals = File.ReadAllLines("title.principals.tsv");
-        var titlePrincipalsList = new List<TitlePrincipals>();
 
-        foreach (var titlePr in titlePrincipals.Skip(1))
-        {
-            var titlePrData = titlePr.Split('\t');
-
-            var titlePrObj = new TitlePrincipals
-            {
-                tconst = titlePrData[0],
-                ordering = int.Parse(titlePrData[1]),
-                nconst = titlePrData[2],
-                category = titlePrData[3],
-                job = titlePrData[4],
-                characters = titlePrData[5]
-            };
-
-            titlePrincipalsList.Add(titlePrObj);
-        }
-
-        context.TitlePrincipals.AddRange(titlePrincipalsList);
+        foreach (var titlePrincipal in titlePrincipals.Skip(1))
+            context.TitlePrincipals.Add(TitlePrincipals.FromCsv(titlePrincipal));
+            
         context.SaveChanges();
     }
 }

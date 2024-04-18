@@ -8,14 +8,14 @@ class NameBasicsMapper : IEntityTypeConfiguration<NameBasics>
 {
     public void Configure(EntityTypeBuilder<NameBasics> builder)
     {
-        builder.ToTable("name.basics");
-        builder.HasKey(x => x.nconst);
-        builder.Property(x => x.nconst).HasColumnName("nconst");
-        builder.Property(x => x.primaryName).HasColumnName("primaryName");
-        builder.Property(x => x.birthYear).HasColumnName("birthYear");
-        builder.Property(x => x.deathYear).HasColumnName("deathYear");
-        builder.Property(x => x.primaryProfession).HasColumnName("primaryProfession");
-        builder.Property(x => x.knownForTitles).HasColumnName("knownForTitles");
+        builder.ToTable("name_basics");
+        builder.HasKey(x => x.Nconst);
+        builder.Property(x => x.Nconst).HasColumnName("nconst");
+        builder.Property(x => x.PrimaryName).HasColumnName("primaryName");
+        builder.Property(x => x.BirthYear).HasColumnName("birthYear");
+        builder.Property(x => x.DeathYear).HasColumnName("deathYear");
+        builder.Property(x => x.PrimaryProfession).HasColumnName("primaryProfession");
+        builder.Property(x => x.KnownForTitles).HasColumnName("knownForTitles");
     }
 }
 

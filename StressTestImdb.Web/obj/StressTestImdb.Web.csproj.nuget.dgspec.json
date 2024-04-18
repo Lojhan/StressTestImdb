@@ -204,6 +204,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNet.OData": {
+              "target": "Package",
+              "version": "[7.7.4, )"
+            },
+            "Microsoft.AspNetCore.Odata": {
+              "target": "Package",
+              "version": "[8.2.5, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.4, )"

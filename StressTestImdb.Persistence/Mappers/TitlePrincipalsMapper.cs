@@ -8,14 +8,14 @@ class TitlePrincipalsMapper : IEntityTypeConfiguration<TitlePrincipals>
 {
     public void Configure(EntityTypeBuilder<TitlePrincipals> builder)
     {
-        builder.ToTable("title.principals");
-        builder.HasKey(x => x.tconst);
-        builder.Property(x => x.tconst).HasColumnName("tconst");
-        builder.Property(x => x.ordering).HasColumnName("ordering");
-        builder.Property(x => x.nconst).HasColumnName("nconst");
-        builder.Property(x => x.category).HasColumnName("category");
-        builder.Property(x => x.job).HasColumnName("job");
-        builder.Property(x => x.characters).HasColumnName("characters");
+        builder.ToTable("title_principals");
+        builder.HasKey(x => x.Tconst);
+        builder.Property(x => x.Tconst).HasColumnName("tconst");
+        builder.Property(x => x.Ordering).HasColumnName("ordering");
+        builder.Property(x => x.Nconst).HasColumnName("nconst");
+        builder.Property(x => x.Category).HasColumnName("category");
+        builder.Property(x => x.Job).HasColumnName("job");
+        builder.Property(x => x.Characters).HasColumnName("characters");
     }
 }
 

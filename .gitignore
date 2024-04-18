@@ -1,0 +1,17 @@
+
+
+*.tsv
+data
+log
+secrets
+
+.vs
+
+StressTestImdb.Web/bin
+StressTestImdb.Web/obj
+
+StressTestImdb.Domain/bin
+StressTestImdb.Domain/obj
+
+StressTestImdb.Persistence/bin
+StressTestImdb.Persistence/obj

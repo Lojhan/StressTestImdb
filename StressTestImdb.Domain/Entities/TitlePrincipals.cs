@@ -1,11 +1,36 @@
+using System.Text.Json;
+
 namespace StressTestImdb.Domain.Entities;
 
-public class TitlePrincipals
+public class TitlePrincipals(
+    string tconst,
+    int ordering,
+    string nconst,
+    string category,
+    string job,
+    string[] characters
+)
 {
-    public string tconst { get; set; }
-    public int ordering { get; set; }
-    public string nconst { get; set; }
-    public string category { get; set; }
-    public string job { get; set; }
-    public string characters { get; set; }
+    public string Tconst { get; set; } = tconst;
+    public int Ordering { get; set; } = ordering;
+    public string Nconst { get; set; } = nconst;
+    public string Category { get; set; } = category;
+    public string Job { get; set; } = job;
+    public string[] Characters { get; set; } = characters;
+    public TitleAkas TitleAkas { get; set; } = null!;
+
+    public static TitlePrincipals FromCsv(string csvLine)
+    {
+        var values = csvLine.Split('\t');
+        var titlePrincipals = new TitlePrincipals(
+            values[0],
+            int.Parse(values[1]),
+            values[2],
+            values[3],
+            values[4],
+            JsonSerializer.Deserialize<string[]>(values[5])!
+        );
+
+        return titlePrincipals;
+    }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StressTestImdb.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d70569c8f04821f610a78ce3aa63b625a78327df")]
 [assembly: System.Reflection.AssemblyProductAttribute("StressTestImdb.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StressTestImdb.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

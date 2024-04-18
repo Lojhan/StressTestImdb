@@ -8,12 +8,12 @@ class TitleEpisodeMapper : IEntityTypeConfiguration<TitleEpisode>
 {
     public void Configure(EntityTypeBuilder<TitleEpisode> builder)
     {
-        builder.ToTable("title.episode");
-        builder.HasKey(x => x.tconst);
-        builder.Property(x => x.tconst).HasColumnName("tconst");
-        builder.Property(x => x.parentTconst).HasColumnName("parentTconst");
-        builder.Property(x => x.seasonNumber).HasColumnName("seasonNumber");
-        builder.Property(x => x.episodeNumber).HasColumnName("episodeNumber");
+        builder.ToTable("title_episode");
+        builder.HasKey(x => x.Tconst);
+        builder.Property(x => x.Tconst).HasColumnName("tconst");
+        builder.Property(x => x.ParentTconst).HasColumnName("parentTconst");
+        builder.Property(x => x.SeasonNumber).HasColumnName("seasonNumber");
+        builder.Property(x => x.EpisodeNumber).HasColumnName("episodeNumber");
     }
 }
 

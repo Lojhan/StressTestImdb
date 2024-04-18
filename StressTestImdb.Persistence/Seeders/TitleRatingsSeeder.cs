@@ -8,23 +8,10 @@ public class TitleRatingsSeeder
     {
         if (context.TitleRatings.Any()) return;
         var titleRatings = File.ReadAllLines("title.ratings.tsv");
-        var titleRatingsList = new List<TitleRatings>();
-
-        foreach (var titleRt in titleRatings.Skip(1))
-        {
-            var titleRtData = titleRt.Split('\t');
-
-            var titleRtObj = new TitleRatings
-            {
-                tconst = titleRtData[0],
-                averageRating = double.Parse(titleRtData[1]),
-                numVotes = int.Parse(titleRtData[2])
-            };
-
-            titleRatingsList.Add(titleRtObj);
-        }
-
-        context.TitleRatings.AddRange(titleRatingsList);
+        
+        foreach (var titleRating in titleRatings.Skip(1))
+            context.TitleRatings.Add(TitleRating.FromCsv(titleRating));
+            
         context.SaveChanges();
     }
 }

@@ -1,11 +1,34 @@
 {
   "Version": 1,
-  "Hash": "wN8agmBAtqYHblWs029+NZuL1qFUJIaZ3bAm+3BBz+g=",
+  "Hash": "3FnWo86eCZfRcXumtE5tn+GWBXss780d6aNT4zWdVNI=",
   "Source": "StressTestImdb.Web",
   "BasePath": "_content/StressTestImdb.Web",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\VINÍCIUSHERNANDES\\Ploomes\\code\\pocs\\StressTestImdb\\StressTestImdb.Domain\\StressTestImdb.Domain.csproj",
+      "Version": 2,
+      "Source": "StressTestImdb.Domain",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    },
+    {
+      "Identity": "C:\\Users\\VINÍCIUSHERNANDES\\Ploomes\\code\\pocs\\StressTestImdb\\StressTestImdb.Persistence\\StressTestImdb.Persistence.csproj",
+      "Version": 2,
+      "Source": "StressTestImdb.Persistence",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
   "DiscoveryPatterns": [],
   "Assets": []
 }
