@@ -8,7 +8,7 @@ class TitleEpisodeMapper : IEntityTypeConfiguration<TitleEpisode>
 {
     public void Configure(EntityTypeBuilder<TitleEpisode> builder)
     {
-        builder.ToTable("title_episode");
+        builder.ToTable("titleepisode", "imdb");
         builder.HasKey(x => x.Tconst);
         builder.Property(x => x.Tconst).HasColumnName("tconst");
         builder.Property(x => x.ParentTconst).HasColumnName("parentTconst");

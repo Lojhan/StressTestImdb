@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace StressTestImdb.Domain.Entities;
 
 public class NameBasics
@@ -23,10 +25,10 @@ public class NameBasics
         var nameBasics = new NameBasics(
             values[0],
             values[1],
-            int.Parse(values[2]),
-            int.Parse(values[3]),
-            values[4].Split(','),
-            values[5].Split(',')
+            values[2] == @"\N" ? 0 : int.Parse(values[2]),
+            values[3] == @"\N" ? 0 : int.Parse(values[3]),
+            JsonSerializer.Deserialize<string[]>(values[4])!,
+            JsonSerializer.Deserialize<string[]>(values[5])!
         );
 
         return nameBasics;

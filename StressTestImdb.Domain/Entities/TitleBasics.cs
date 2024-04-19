@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace StressTestImdb.Domain.Entities;
 
 public class TitleBasics(
@@ -22,6 +24,12 @@ public class TitleBasics(
     public int RuntimeMinutes { get; set; } = runtimeMinutes;
     public string[] Genres { get; set; } = genres;
 
+    public TitleAkas TitleAkas { get; set; } = null!;
+    public TitleCrew TitleCrew { get; set; } = null!;
+    public TitleEpisode[] TitleEpisodes { get; set; } = [];
+    public TitlePrincipals[] TitlePrincipals { get; set; } = [];
+    public TitleRating TitleRating { get; set; } = null!;
+
     public static TitleBasics FromCsv(string csvLine)
     {
         var values = csvLine.Split('\t');
@@ -31,10 +39,10 @@ public class TitleBasics(
             values[2],
             values[3],
             values[4] == "1",
-            int.Parse(values[5]),
-            int.Parse(values[6]),
-            int.Parse(values[7]),
-            values[8].Split(',')
+            values[5] == @"\N" ? 0 : int.Parse(values[5]),
+            values[6] == @"\N" ? 0 : int.Parse(values[6]),
+            values[7] == @"\N" ? 0 : int.Parse(values[7]),
+            values[8] == @"\N" ? [] : values[8].Split(',')
         );
 
         return titleBasics;

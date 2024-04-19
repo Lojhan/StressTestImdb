@@ -9,7 +9,7 @@ class TitleBasicsMapper : IEntityTypeConfiguration<TitleBasics>
 {
     public void Configure(EntityTypeBuilder<TitleBasics> builder)
     {
-        builder.ToTable("title_basics");
+        builder.ToTable("titlebasics", "imdb");
         builder.HasKey(x => x.Tconst);
         builder.Property(x => x.Tconst).HasColumnName("tconst");
         builder.Property(x => x.TitleType).HasColumnName("titleType");
@@ -20,6 +20,13 @@ class TitleBasicsMapper : IEntityTypeConfiguration<TitleBasics>
         builder.Property(x => x.EndYear).HasColumnName("endYear");
         builder.Property(x => x.RuntimeMinutes).HasColumnName("runtimeMinutes");
         builder.Property(x => x.Genres).HasColumnName("genres");
+
+        builder.HasOne(x => x.TitleAkas).WithOne(x => x.TitleBasics).HasForeignKey<TitleBasics>(x => x.Tconst);
+        builder.HasOne(x => x.TitleCrew).WithOne(x => x.TitleBasics).HasForeignKey<TitleCrew>(x => x.Tconst);
+        builder.HasMany(x => x.TitleEpisodes).WithOne(x => x.TitleBasics).HasForeignKey(x => x.ParentTconst);
+        builder.HasMany(x => x.TitlePrincipals).WithOne(x => x.TitleBasics).HasForeignKey(x => x.Tconst);
+        builder.HasOne(x => x.TitleRating).WithOne(x => x.TitleBasics).HasForeignKey<TitleRating>(x => x.Tconst);
+  
     }
 }
 

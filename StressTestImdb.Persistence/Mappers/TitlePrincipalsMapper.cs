@@ -8,7 +8,7 @@ class TitlePrincipalsMapper : IEntityTypeConfiguration<TitlePrincipals>
 {
     public void Configure(EntityTypeBuilder<TitlePrincipals> builder)
     {
-        builder.ToTable("title_principals");
+        builder.ToTable("titleprincipals", "imdb");
         builder.HasKey(x => x.Tconst);
         builder.Property(x => x.Tconst).HasColumnName("tconst");
         builder.Property(x => x.Ordering).HasColumnName("ordering");

@@ -11,7 +11,7 @@ public class TitleEpisode(
     public string ParentTconst { get; set; } = parentTconst;
     public int SeasonNumber { get; set; } = seasonNumber;
     public int EpisodeNumber { get; set; } = episodeNumber;
-    public TitleAkas TitleAkas { get; set; } = null!;
+    public TitleBasics TitleBasics { get; set; } = null!;
 
     public static TitleEpisode FromCsv(string csvLine)
     {
@@ -19,8 +19,8 @@ public class TitleEpisode(
         var titleEpisode = new TitleEpisode(
             values[0],
             values[1],
-            int.Parse(values[2]),
-            int.Parse(values[3])
+            values[2] == @"\N" ? 0 : int.Parse(values[2]),
+            values[3] == @"\N" ? 0 : int.Parse(values[3])
         );
 
         return titleEpisode;

@@ -17,14 +17,14 @@ public class TitlePrincipals(
     public string Category { get; set; } = category;
     public string Job { get; set; } = job;
     public string[] Characters { get; set; } = characters;
-    public TitleAkas TitleAkas { get; set; } = null!;
+    public TitleBasics TitleBasics { get; set; } = null!;
 
     public static TitlePrincipals FromCsv(string csvLine)
     {
         var values = csvLine.Split('\t');
         var titlePrincipals = new TitlePrincipals(
             values[0],
-            int.Parse(values[1]),
+            values[1] == @"\N" ? 0 : int.Parse(values[1]),
             values[2],
             values[3],
             values[4],

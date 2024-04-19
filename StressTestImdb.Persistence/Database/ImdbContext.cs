@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using StressTestImdb.Domain.Entities;
 using StressTestImdb.Mappers;
 using StressTestImdb.Persistence.Seeders;
@@ -30,16 +31,17 @@ public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(opti
     {
         var options = new DbContextOptionsBuilder<ImdbContext>()
             .UseSqlServer(connectionString)
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ImdbContext(options);
         context.Database.Migrate();
 
         Console.WriteLine("Seeding database...");
-        Console.WriteLine("Seeding TitleAkas...");
-        TitleAkasSeeder.Seed(context);
         Console.WriteLine("Seeding TitleBasics...");
         TitleBasicsSeeder.Seed(context);
+        Console.WriteLine("Seeding TitleAkas...");
+        TitleAkasSeeder.Seed(context);
         Console.WriteLine("Seeding TitleCrew...");
         TitleCrewSeeder.Seed(context);
         Console.WriteLine("Seeding TitleEpisode...");
@@ -52,5 +54,16 @@ public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(opti
         NameBasicsSeeder.Seed(context);
 
         Console.WriteLine("Database seeded successfully!");
+    }
+}
+
+public class ImdbContextFactory : IDesignTimeDbContextFactory<ImdbContext>
+{
+    public ImdbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<ImdbContext>();
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=TestDatabase;User=sa;Password=Your_password123;Persist Security Info=False;Encrypt=False");
+
+        return new ImdbContext(optionsBuilder.Options);
     }
 }

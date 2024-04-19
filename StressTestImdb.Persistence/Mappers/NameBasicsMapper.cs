@@ -8,7 +8,7 @@ class NameBasicsMapper : IEntityTypeConfiguration<NameBasics>
 {
     public void Configure(EntityTypeBuilder<NameBasics> builder)
     {
-        builder.ToTable("name_basics");
+        builder.ToTable("namebasics", "imdb");
         builder.HasKey(x => x.Nconst);
         builder.Property(x => x.Nconst).HasColumnName("nconst");
         builder.Property(x => x.PrimaryName).HasColumnName("primaryName");

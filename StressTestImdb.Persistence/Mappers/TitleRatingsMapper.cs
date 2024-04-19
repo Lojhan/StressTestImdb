@@ -8,7 +8,7 @@ class TitleRatingsMapper : IEntityTypeConfiguration<TitleRating>
 {
     public void Configure(EntityTypeBuilder<TitleRating> builder)
     {
-        builder.ToTable("title_ratings");
+        builder.ToTable("titleratings", "imdb");
         builder.HasKey(x => x.Tconst);
         builder.Property(x => x.Tconst).HasColumnName("tconst");
         builder.Property(x => x.AverageRating).HasColumnName("averageRating");

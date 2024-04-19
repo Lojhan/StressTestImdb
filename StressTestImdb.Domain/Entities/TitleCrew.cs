@@ -12,12 +12,14 @@ public class TitleCrew(
     public string[] Directors { get; set; } = directors;
     public string[] Writers { get; set; } = writers;
 
+    public TitleBasics TitleBasics { get; set; } = null!;
+
     public static TitleCrew FromCsv(string csvLine)
     {
         var values = csvLine.Split('\t');
         var titleCrew = new TitleCrew(
             values[0],
-            values[1].Split(','),
+            JsonSerializer.Deserialize<string[]>(values[1])!,
             JsonSerializer.Deserialize<string[]>(values[2])!
         );
 

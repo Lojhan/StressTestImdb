@@ -21,17 +21,13 @@ public class TitleAkas(
     public bool IsOriginalTitle { get; set; } = isOriginalTitle;
 
     public TitleBasics TitleBasics { get; set; } = null!;
-    public TitleCrew TitleCrew { get; set; } = null!;
-    public TitleEpisode[] TitleEpisodes { get; set; } = [];
-    public TitlePrincipals[] TitlePrincipals { get; set; } = [];
-    public TitleRating TitleRating { get; set; } = null!;
     
     public static TitleAkas FromCsv(string csvLine)
     {
         var values = csvLine.Split('\t');
         var titleAkas = new TitleAkas(
             values[0],
-            int.Parse(values[1]),
+            values[1] == @"\N" ? 0 : int.Parse(values[1]),
             values[2],
             values[3],
             values[4],
