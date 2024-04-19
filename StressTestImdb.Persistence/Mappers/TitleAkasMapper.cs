@@ -9,7 +9,10 @@ class TitleAkasMapper : IEntityTypeConfiguration<TitleAkas>
     public void Configure(EntityTypeBuilder<TitleAkas> builder)
     {
         builder.ToTable("titleakas", "imdb");
-        builder.HasKey(x => x.TitleId);
+
+        // the key is id + ordering
+        builder.HasKey(x => new { x.TitleId, x.Ordering });
+
         builder.Property(x => x.TitleId).HasColumnName("titleId");
         builder.Property(x => x.Ordering).HasColumnName("ordering");
         builder.Property(x => x.Title).HasColumnName("title");

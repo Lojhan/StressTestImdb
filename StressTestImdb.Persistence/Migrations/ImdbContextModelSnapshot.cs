@@ -61,6 +61,10 @@ namespace StressTestImdb.Persistence.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("titleId");
 
+                    b.Property<int>("Ordering")
+                        .HasColumnType("int")
+                        .HasColumnName("ordering");
+
                     b.Property<string>("Attributes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -74,10 +78,6 @@ namespace StressTestImdb.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("language");
-
-                    b.Property<int>("Ordering")
-                        .HasColumnType("int")
-                        .HasColumnName("ordering");
 
                     b.Property<string>("Region")
                         .IsRequired()
@@ -94,7 +94,10 @@ namespace StressTestImdb.Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("types");
 
-                    b.HasKey("TitleId");
+                    b.HasKey("TitleId", "Ordering");
+
+                    b.HasIndex("TitleId")
+                        .IsUnique();
 
                     b.ToTable("titleakas", "imdb");
                 });
@@ -173,12 +176,7 @@ namespace StressTestImdb.Persistence.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("tconst");
 
-                    b.Property<int>("EpisodeNumber")
-                        .HasColumnType("int")
-                        .HasColumnName("episodeNumber");
-
                     b.Property<string>("ParentTconst")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("parentTconst");
 
@@ -186,7 +184,11 @@ namespace StressTestImdb.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("seasonNumber");
 
-                    b.HasKey("Tconst");
+                    b.Property<int>("EpisodeNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("episodeNumber");
+
+                    b.HasKey("Tconst", "ParentTconst", "SeasonNumber", "EpisodeNumber");
 
                     b.HasIndex("ParentTconst");
 
@@ -250,57 +252,66 @@ namespace StressTestImdb.Persistence.Migrations
             modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleAkas", b =>
                 {
                     b.HasOne("StressTestImdb.Domain.Entities.TitleBasics", "TitleBasics")
-                        .WithMany()
-                        .HasForeignKey("TitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StressTestImdb.Domain.Entities.TitleCrew", "TitleCrew")
-                        .WithMany()
-                        .HasForeignKey("TitleId")
+                        .WithOne("TitleAkas")
+                        .HasForeignKey("StressTestImdb.Domain.Entities.TitleAkas", "TitleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TitleBasics");
+                });
 
-                    b.Navigation("TitleCrew");
+            modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleCrew", b =>
+                {
+                    b.HasOne("StressTestImdb.Domain.Entities.TitleBasics", "TitleBasics")
+                        .WithOne("TitleCrew")
+                        .HasForeignKey("StressTestImdb.Domain.Entities.TitleCrew", "Tconst")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TitleBasics");
                 });
 
             modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleEpisode", b =>
                 {
-                    b.HasOne("StressTestImdb.Domain.Entities.TitleAkas", "TitleAkas")
+                    b.HasOne("StressTestImdb.Domain.Entities.TitleBasics", "TitleBasics")
                         .WithMany("TitleEpisodes")
                         .HasForeignKey("ParentTconst")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TitleAkas");
+                    b.Navigation("TitleBasics");
                 });
 
             modelBuilder.Entity("StressTestImdb.Domain.Entities.TitlePrincipals", b =>
                 {
-                    b.HasOne("StressTestImdb.Domain.Entities.TitleAkas", "TitleAkas")
+                    b.HasOne("StressTestImdb.Domain.Entities.TitleBasics", "TitleBasics")
                         .WithMany("TitlePrincipals")
                         .HasForeignKey("Tconst")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TitleAkas");
+                    b.Navigation("TitleBasics");
                 });
 
             modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleRating", b =>
                 {
-                    b.HasOne("StressTestImdb.Domain.Entities.TitleAkas", "TitleAkas")
+                    b.HasOne("StressTestImdb.Domain.Entities.TitleBasics", "TitleBasics")
                         .WithOne("TitleRating")
                         .HasForeignKey("StressTestImdb.Domain.Entities.TitleRating", "Tconst")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TitleAkas");
+                    b.Navigation("TitleBasics");
                 });
 
-            modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleAkas", b =>
+            modelBuilder.Entity("StressTestImdb.Domain.Entities.TitleBasics", b =>
                 {
+                    b.Navigation("TitleAkas")
+                        .IsRequired();
+
+                    b.Navigation("TitleCrew")
+                        .IsRequired();
+
                     b.Navigation("TitleEpisodes");
 
                     b.Navigation("TitlePrincipals");

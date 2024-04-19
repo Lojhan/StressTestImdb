@@ -26,8 +26,8 @@ public class TitleBasics(
 
     public TitleAkas TitleAkas { get; set; } = null!;
     public TitleCrew TitleCrew { get; set; } = null!;
-    public TitleEpisode[] TitleEpisodes { get; set; } = [];
-    public TitlePrincipals[] TitlePrincipals { get; set; } = [];
+    public List<TitleEpisode> TitleEpisodes { get; set; } = [];
+    public List<TitlePrincipals> TitlePrincipals { get; set; } = [];
     public TitleRating TitleRating { get; set; } = null!;
 
     public static TitleBasics FromCsv(string csvLine)

@@ -10,13 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
 var modelBuilder = new ODataConventionModelBuilder();
-modelBuilder.EntitySet<NameBasics>("NameBasics");
-modelBuilder.EntitySet<TitleAkas>("TitleAkas");
-modelBuilder.EntitySet<TitleBasics>("TitleBasics");
-modelBuilder.EntitySet<TitleCrew>("TitleCrew");
-modelBuilder.EntitySet<TitleEpisode>("TitleEpisode");
-modelBuilder.EntitySet<TitlePrincipals>("TitlePrincipals");
-modelBuilder.EntitySet<TitleRating>("TitleRatings");
+modelBuilder.EntitySet<TitleAkas>("TitleAkas").EntityType.HasKey(x => new { x.TitleId, x.Ordering });
+modelBuilder.EntitySet<TitleBasics>("TitleBasics").EntityType.HasKey(x => x.Tconst);
+modelBuilder.EntitySet<TitleCrew>("TitleCrew").EntityType.HasKey(x => x.Tconst);
+modelBuilder.EntitySet<TitleEpisode>("TitleEpisode").EntityType.HasKey(x => new { x.Tconst, x.ParentTconst, x.SeasonNumber, x.EpisodeNumber });
+modelBuilder.EntitySet<TitlePrincipals>("TitlePrincipals").EntityType.HasKey(x => new { x.Tconst, x.Nconst });
+modelBuilder.EntitySet<TitleRating>("TitleRatings").EntityType.HasKey(x => x.Tconst);
 
 builder.Services.AddDbContext<ImdbContext>(options => options.UseSqlServer(connectionString));
 if (builder.Environment.IsDevelopment()) ImdbContext.MigrateAndSeed(connectionString);
@@ -42,6 +41,7 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
+app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();
 

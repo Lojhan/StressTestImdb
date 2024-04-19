@@ -11,23 +11,32 @@ namespace StressTestImdb.Web.Controllers;
 public class TestOdataController(ImdbContext context) : ODataController
 {
     [EnableQuery]
-    public IQueryable<NameBasics> GetNameBasics() => context.NameBasics;
+    [HttpGet("NameBasics")]
+    public IActionResult GetNameBasics() => Ok(context.NameBasics);
 
     [EnableQuery]
-    public IQueryable<TitleAkas> GetTitleAkas() => context.TitleAkas;
+    [HttpGet("TitleAkas")]
+    public IActionResult GetTitleAkas() => Ok(context.TitleAkas);
 
     [EnableQuery]
-    public IQueryable<TitleBasics> GetTitleBasics() => context.TitleBasics;
+    [HttpGet("TitleBasics")]
+    public IActionResult GetTitleBasics() => Ok(context.TitleBasics);
 
     [EnableQuery]
-    public IQueryable<TitleCrew> GetTitleCrew() => context.TitleCrew;
+    [HttpGet("TitleCrew")]
+    public IActionResult GetTitleCrew() => Ok(context.TitleCrew);
 
     [EnableQuery]
-    public IQueryable<TitleEpisode> GetTitleEpisode() => context.TitleEpisode;
+    [HttpGet("TitleEpisode")]
+    public IActionResult GetTitleEpisode() => Ok(context.TitleEpisode);
 
     [EnableQuery]
-    public IQueryable<TitlePrincipals> GetTitlePrincipals() => context.TitlePrincipals;
+    [HttpGet("TitlePrincipals")]
+    public IActionResult GetTitlePrincipals() => Ok(context.TitlePrincipals);
 
     [EnableQuery]
-    public IQueryable<TitleRating> GetTitleRatings() => context.TitleRatings;
+    [HttpGet("TitleRatings")]
+    public IActionResult GetTitleRatings() => Ok(context.TitleRatings);
+
+    
 }

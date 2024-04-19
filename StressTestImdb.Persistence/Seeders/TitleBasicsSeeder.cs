@@ -6,30 +6,105 @@ public class TitleBasicsSeeder
 {
     public static void Seed(ImdbContext context)
     {
-        if (context.TitleBasics.Any()) return;
 
-        using StreamReader reader = new("title.basics.tsv");
-        reader.ReadLine();
-
-        string line;
-        int count = 0;
-        while ((line = reader.ReadLine()) != null)
+        List<TitleBasics> titleBasics = [];
+        
+        while (context.TitleBasics.Count() <= 10_000)
         {
-            context.TitleBasics.Add(TitleBasics.FromCsv(line));
+            string id = Guid.NewGuid().ToString();
+            TitleBasics titleBasic = new(
+                tconst: id,
+                titleType: "movie",
+                primaryTitle: "Movie Title",
+                originalTitle: "Movie Title",
+                isAdult: false,
+                startYear: 2021,
+                endYear: 2021,
+                runtimeMinutes: 120,
+                genres: ["Action, Adventure, Comedy"]
+            );
 
-            // Save changes after a certain number of entries to avoid excessive database calls
-            if (context.TitleBasics.Local.Count % 10000 == 0)
+            TitleAkas titleAkas = new(
+                titleId: id,
+                ordering: 1,
+                title: "Movie Title",
+                region: "US",
+                language: "English",
+                types: ["original"],
+                attributes: ["imdbDisplay"],
+                isOriginalTitle: true
+            );
+
+            TitleRating titleRating = new(
+                tconst: id,
+                averageRating: 8.5,
+                numVotes: 100
+            );
+
+            TitleCrew titleCrew = new(
+                tconst: id,
+                directors: ["jamescameron"],
+                writers: ["jamescameron"]
+            );
+
+            TitlePrincipals titlePrincipals = new(
+                tconst: id,
+                ordering: 1,
+                nconst: "nm0000245",
+                category: "actor",
+                job: "actor",
+                characters: ["John Doe"]
+            );
+
+            List<TitleEpisode> titleEpisodes = [];
+
+            for (int i = 0; i < 10; i++)
             {
-                count += context.TitleBasics.Local.Count;
-                Console.WriteLine($"Saving {context.TitleBasics.Local.Count} entries to the database...");
-                Console.WriteLine($"Total entries saved: {count}");
+                TitleEpisode titleEpisode = new(
+                    tconst: id,
+                    parentTconst: id,
+                    seasonNumber: 1,
+                    episodeNumber: i
+                );
+
+                titleEpisodes.Add(titleEpisode);
+            }
+
+            titleBasic.TitleAkas = titleAkas;
+            titleBasic.TitleRating = titleRating;
+            titleBasic.TitleCrew = titleCrew;
+            titleBasic.TitlePrincipals = [titlePrincipals];
+            titleBasic.TitleEpisodes = titleEpisodes;
+
+            titleBasics.Add(titleBasic);
+
+            if (titleBasics.Count % 1000 == 0)
+            {
+                Console.WriteLine($"Seeding {titleBasics.Count} TitleBasics...");
+                context.TitleBasics.AddRange(titleBasics);
                 context.SaveChanges();
-                // Clear the context to avoid tracking too many entities
-                context.TitleBasics.Local.Clear();
+                titleBasics.Clear();
             }
         }
 
-        // Save any remaining changes
+        context.TitleBasics.AddRange(titleBasics);
         context.SaveChanges();
     }
+
+    public static void SpawnSeeder(ImdbContext context)
+    {
+        // spanwn a thread that will countinuously seeding the database
+
+        Thread thread = new(() =>
+        {
+            while (true)
+            {
+                Seed(context);
+                // send message to the console
+                Console.WriteLine("Seeding database...");
+                Thread.Sleep(1000);
+            }
+        });
+    }
+    
 }

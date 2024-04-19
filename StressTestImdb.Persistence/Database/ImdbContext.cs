@@ -39,19 +39,9 @@ public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(opti
 
         Console.WriteLine("Seeding database...");
         Console.WriteLine("Seeding TitleBasics...");
-        TitleBasicsSeeder.Seed(context);
+        TitleBasicsSeeder.SpawnSeeder(context);
         Console.WriteLine("Seeding TitleAkas...");
-        TitleAkasSeeder.Seed(context);
-        Console.WriteLine("Seeding TitleCrew...");
-        TitleCrewSeeder.Seed(context);
-        Console.WriteLine("Seeding TitleEpisode...");
-        TitleEpisodeSeeder.Seed(context);
-        Console.WriteLine("Seeding TitlePrincipals...");
-        TitlePrincipalsSeeder.Seed(context);
-        Console.WriteLine("Seeding TitleRatings...");
-        TitleRatingsSeeder.Seed(context);
-        Console.WriteLine("Seeding NameBasics...");
-        NameBasicsSeeder.Seed(context);
+       
 
         Console.WriteLine("Database seeded successfully!");
     }

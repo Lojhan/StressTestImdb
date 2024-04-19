@@ -19,8 +19,8 @@ public class TitleCrew(
         var values = csvLine.Split('\t');
         var titleCrew = new TitleCrew(
             values[0],
-            JsonSerializer.Deserialize<string[]>(values[1])!,
-            JsonSerializer.Deserialize<string[]>(values[2])!
+            values[1] == @"\N" ? [] : values[1].Split(','),
+            values[2] == @"\N" ? [] : values[2].Split(',')
         );
 
         return titleCrew;

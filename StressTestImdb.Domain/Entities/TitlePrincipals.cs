@@ -28,7 +28,7 @@ public class TitlePrincipals(
             values[2],
             values[3],
             values[4],
-            JsonSerializer.Deserialize<string[]>(values[5])!
+            values[5] == @"\N" ? [] : JsonSerializer.Deserialize<string[]>(values[5])!
         );
 
         return titlePrincipals;

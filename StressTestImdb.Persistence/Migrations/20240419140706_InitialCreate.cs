@@ -51,20 +51,6 @@ namespace StressTestImdb.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "titlecrew",
-                schema: "imdb",
-                columns: table => new
-                {
-                    tconst = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    directors = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    writers = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_titlecrew", x => x.tconst);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "titleakas",
                 schema: "imdb",
                 columns: table => new
@@ -80,7 +66,7 @@ namespace StressTestImdb.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_titleakas", x => x.titleId);
+                    table.PrimaryKey("PK_titleakas", x => new { x.titleId, x.ordering });
                     table.ForeignKey(
                         name: "FK_titleakas_titlebasics_titleId",
                         column: x => x.titleId,
@@ -88,11 +74,25 @@ namespace StressTestImdb.Persistence.Migrations
                         principalTable: "titlebasics",
                         principalColumn: "tconst",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "titlecrew",
+                schema: "imdb",
+                columns: table => new
+                {
+                    tconst = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    directors = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    writers = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_titlecrew", x => x.tconst);
                     table.ForeignKey(
-                        name: "FK_titleakas_titlecrew_titleId",
-                        column: x => x.titleId,
+                        name: "FK_titlecrew_titlebasics_tconst",
+                        column: x => x.tconst,
                         principalSchema: "imdb",
-                        principalTable: "titlecrew",
+                        principalTable: "titlebasics",
                         principalColumn: "tconst",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -109,13 +109,13 @@ namespace StressTestImdb.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_titleepisode", x => x.tconst);
+                    table.PrimaryKey("PK_titleepisode", x => new { x.tconst, x.parentTconst, x.seasonNumber, x.episodeNumber });
                     table.ForeignKey(
-                        name: "FK_titleepisode_titleakas_parentTconst",
+                        name: "FK_titleepisode_titlebasics_parentTconst",
                         column: x => x.parentTconst,
                         principalSchema: "imdb",
-                        principalTable: "titleakas",
-                        principalColumn: "titleId",
+                        principalTable: "titlebasics",
+                        principalColumn: "tconst",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -135,11 +135,11 @@ namespace StressTestImdb.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_titleprincipals", x => x.tconst);
                     table.ForeignKey(
-                        name: "FK_titleprincipals_titleakas_tconst",
+                        name: "FK_titleprincipals_titlebasics_tconst",
                         column: x => x.tconst,
                         principalSchema: "imdb",
-                        principalTable: "titleakas",
-                        principalColumn: "titleId",
+                        principalTable: "titlebasics",
+                        principalColumn: "tconst",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -156,13 +156,20 @@ namespace StressTestImdb.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_titleratings", x => x.tconst);
                     table.ForeignKey(
-                        name: "FK_titleratings_titleakas_tconst",
+                        name: "FK_titleratings_titlebasics_tconst",
                         column: x => x.tconst,
                         principalSchema: "imdb",
-                        principalTable: "titleakas",
-                        principalColumn: "titleId",
+                        principalTable: "titlebasics",
+                        principalColumn: "tconst",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_titleakas_titleId",
+                schema: "imdb",
+                table: "titleakas",
+                column: "titleId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_titleepisode_parentTconst",
@@ -179,6 +186,14 @@ namespace StressTestImdb.Persistence.Migrations
                 schema: "imdb");
 
             migrationBuilder.DropTable(
+                name: "titleakas",
+                schema: "imdb");
+
+            migrationBuilder.DropTable(
+                name: "titlecrew",
+                schema: "imdb");
+
+            migrationBuilder.DropTable(
                 name: "titleepisode",
                 schema: "imdb");
 
@@ -191,15 +206,7 @@ namespace StressTestImdb.Persistence.Migrations
                 schema: "imdb");
 
             migrationBuilder.DropTable(
-                name: "titleakas",
-                schema: "imdb");
-
-            migrationBuilder.DropTable(
                 name: "titlebasics",
-                schema: "imdb");
-
-            migrationBuilder.DropTable(
-                name: "titlecrew",
                 schema: "imdb");
         }
     }
