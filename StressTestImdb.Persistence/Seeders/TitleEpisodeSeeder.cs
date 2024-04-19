@@ -7,11 +7,32 @@ public class TitleEpisodeSeeder
     public static void Seed(ImdbContext context)
     {
         if (context.TitleEpisode.Any()) return;
-        var titleEpisodes = File.ReadAllLines("title.episode.tsv");
-        
-        foreach (var titleEpisode in titleEpisodes.Skip(1))
-            context.TitleEpisode.Add(TitleEpisode.FromCsv(titleEpisode));
 
+        using StreamReader reader = new("title.episode.tsv");
+
+        reader.ReadLine();
+
+        string line;
+        int count = 0;
+
+        while ((line = reader.ReadLine()) != null)
+        {
+            context.TitleEpisode.Add(TitleEpisode.FromCsv(line));
+
+            // Save changes after a certain number of entries to avoid excessive database calls
+            if (context.TitleEpisode.Local.Count % 10000 == 0)
+            {
+                count += context.TitleEpisode.Local.Count;
+                Console.WriteLine($"Saving {context.TitleEpisode.Local.Count} entries to the database...");
+                Console.WriteLine($"Total entries saved: {count}");
+                context.SaveChanges();
+                // Clear the context to avoid tracking too many entities
+                context.TitleEpisode.Local.Clear();
+            }
+        }
+
+        // Save any remaining changes
         context.SaveChanges();
+        
     }
 }
