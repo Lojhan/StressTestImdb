@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using StressTestImdb.Domain.Entities;
 using StressTestImdb.Persistence.Database;
 
@@ -6,11 +7,12 @@ public class TitleBasicsSeeder
 {
     public static void Seed(ImdbContext context)
     {
-
+        Console.WriteLine("Seeding TitleBasics...");
         List<TitleBasics> titleBasics = [];
         
-        while (context.TitleBasics.Count() <= 10_000)
+        while (true)
         {
+            // log count
             string id = Guid.NewGuid().ToString();
             TitleBasics titleBasic = new(
                 tconst: id,
@@ -99,12 +101,16 @@ public class TitleBasicsSeeder
         {
             while (true)
             {
+                ImdbContextFactory factory = new();
+                ImdbContext context = factory.CreateDbContext(null!);
                 Seed(context);
                 // send message to the console
                 Console.WriteLine("Seeding database...");
                 Thread.Sleep(1000);
             }
         });
+
+        thread.Start();
     }
-    
+
 }
